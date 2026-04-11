@@ -66,6 +66,9 @@
       color: var(--text);
       text-decoration: none;
       letter-spacing: -0.02em;
+      /* Fix: prevents logo from stretching or shrinking */
+      flex-shrink: 0;
+      white-space: nowrap;
     }
 
     .nav-logo span { color: var(--accent); }
@@ -434,7 +437,6 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section class="hero" style="border: none; padding-top: 100px;">
     <div class="fade-in">
       <div class="hero-tag">Available on Gatecraft</div>
@@ -451,7 +453,6 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="section-label">About</div>
     <div class="section-title">Who I am</div>
@@ -479,7 +480,6 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects">
     <div class="section-label">Projects</div>
     <div class="section-title">What I've built</div>
@@ -513,7 +513,6 @@
     </a>
   </section>
 
-  <!-- CONTACT -->
   <section id="contact">
     <div class="section-label">Contact</div>
     <div class="section-title">Get in touch</div>
