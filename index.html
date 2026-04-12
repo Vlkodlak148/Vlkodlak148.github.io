@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vlkodlak148</title>
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -23,23 +23,50 @@
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'DM Sans', sans-serif;
+      font-family: 'Inter', sans-serif;
       font-size: 16px;
       line-height: 1.6;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* Subtle grid background */
+    /* Animated grid background */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
       background-image:
-        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
       background-size: 60px 60px;
       pointer-events: none;
       z-index: 0;
+      animation: gridShift 20s linear infinite;
+    }
+
+    @keyframes gridShift {
+      0% { background-position: 0 0; }
+      100% { background-position: 60px 60px; }
+    }
+
+    /* Glowing orb */
+    body::after {
+      content: '';
+      position: fixed;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(74, 222, 128, 0.06) 0%, transparent 70%);
+      top: -200px;
+      left: -200px;
+      pointer-events: none;
+      z-index: 0;
+      animation: orbFloat 8s ease-in-out infinite;
+    }
+
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0); }
+      33% { transform: translate(80px, 40px); }
+      66% { transform: translate(40px, 80px); }
     }
 
     .container {
@@ -57,18 +84,21 @@
       justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid var(--border);
+      animation: slideDown 0.6s ease forwards;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .nav-logo {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Nunito', sans-serif;
       font-weight: 800;
       font-size: 1.1rem;
       color: var(--text);
       text-decoration: none;
       letter-spacing: -0.02em;
-      /* Fix: prevents logo from stretching or shrinking */
-      flex-shrink: 0;
-      white-space: nowrap;
     }
 
     .nav-logo span { color: var(--accent); }
@@ -85,13 +115,27 @@
       font-size: 0.875rem;
       font-weight: 500;
       transition: color 0.2s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: width 0.3s ease;
     }
 
     .nav-links a:hover { color: var(--text); }
+    .nav-links a:hover::after { width: 100%; }
 
     /* HERO */
     .hero {
       padding: 100px 0 80px;
+      border: none !important;
     }
 
     .hero-tag {
@@ -108,6 +152,8 @@
       margin-bottom: 32px;
       letter-spacing: 0.05em;
       text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
     }
 
     .hero-tag::before {
@@ -120,23 +166,39 @@
     }
 
     @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.5; transform: scale(0.8); }
+      0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(74,222,128,0.4); }
+      50% { opacity: 0.7; transform: scale(0.85); box-shadow: 0 0 0 4px rgba(74,222,128,0); }
     }
 
     .hero h1 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Nunito', sans-serif;
       font-size: clamp(2.5rem, 6vw, 4rem);
       font-weight: 800;
       line-height: 1.05;
       letter-spacing: -0.03em;
       margin-bottom: 24px;
       color: var(--text);
+      opacity: 0;
+      animation: fadeUp 0.6s 0.35s forwards;
     }
 
     .hero h1 em {
       font-style: normal;
       color: var(--accent);
+      position: relative;
+    }
+
+    /* Typewriter cursor on the accent word */
+    .hero h1 em::after {
+      content: '|';
+      color: var(--accent);
+      animation: blink 1s step-end infinite;
+      margin-left: 2px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
     }
 
     .hero p {
@@ -146,12 +208,21 @@
       line-height: 1.7;
       font-weight: 300;
       margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.5s forwards;
     }
 
     .hero-actions {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.65s forwards;
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
     .btn {
@@ -163,18 +234,20 @@
       font-size: 0.9rem;
       font-weight: 500;
       text-decoration: none;
-      transition: all 0.2s;
-      font-family: 'DM Sans', sans-serif;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      font-family: 'Inter', sans-serif;
     }
 
     .btn-primary {
       background: var(--accent);
       color: #0a0a0a;
+      box-shadow: 0 0 0 0 rgba(74,222,128,0.3);
     }
 
     .btn-primary:hover {
       background: #6ee79a;
-      transform: translateY(-1px);
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 24px rgba(74,222,128,0.25);
     }
 
     .btn-secondary {
@@ -186,7 +259,7 @@
     .btn-secondary:hover {
       border-color: #444;
       background: var(--surface);
-      transform: translateY(-1px);
+      transform: translateY(-2px) scale(1.02);
     }
 
     /* SECTIONS */
@@ -205,13 +278,30 @@
     }
 
     .section-title {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Nunito', sans-serif;
       font-size: 1.75rem;
       font-weight: 700;
       letter-spacing: -0.02em;
       margin-bottom: 40px;
       color: var(--text);
     }
+
+    /* Scroll-reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+    .reveal-delay-4 { transition-delay: 0.4s; }
 
     /* ABOUT */
     .about-grid {
@@ -225,18 +315,39 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 24px;
-      transition: border-color 0.2s;
+      transition: border-color 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
     }
 
-    .about-card:hover { border-color: #333; }
+    .about-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0% 0%, rgba(74,222,128,0.05) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .about-card:hover::before { opacity: 1; }
+
+    .about-card:hover {
+      border-color: rgba(74,222,128,0.2);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.3);
+    }
 
     .about-card-icon {
       font-size: 1.5rem;
       margin-bottom: 12px;
+      display: inline-block;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
+    .about-card:hover .about-card-icon { transform: scale(1.2) rotate(-5deg); }
+
     .about-card h3 {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Nunito', sans-serif;
       font-size: 0.95rem;
       font-weight: 700;
       margin-bottom: 6px;
@@ -255,16 +366,45 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       padding: 28px;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
       text-decoration: none;
       display: block;
       margin-bottom: 16px;
+      position: relative;
+      overflow: hidden;
     }
 
+    .project-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(74,222,128,0.04) 0%, transparent 50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .project-card:hover::before { opacity: 1; }
+
+    /* Animated left border accent */
+    .project-card::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 3px;
+      height: 0;
+      background: var(--accent);
+      border-radius: 0 2px 2px 0;
+      transition: height 0.3s ease;
+    }
+
+    .project-card:hover::after { height: 100%; }
+
     .project-card:hover {
-      border-color: rgba(74, 222, 128, 0.3);
+      border-color: rgba(74, 222, 128, 0.25);
       background: #181818;
-      transform: translateY(-2px);
+      transform: translateY(-3px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.35);
     }
 
     .project-header {
@@ -275,7 +415,7 @@
     }
 
     .project-name {
-      font-family: 'Syne', sans-serif;
+      font-family: 'Nunito', sans-serif;
       font-size: 1.1rem;
       font-weight: 700;
       color: var(--text);
@@ -285,12 +425,12 @@
     .project-arrow {
       color: var(--muted);
       font-size: 1.1rem;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .project-card:hover .project-arrow {
       color: var(--accent);
-      transform: translate(2px, -2px);
+      transform: translate(3px, -3px) scale(1.2);
     }
 
     .project-desc {
@@ -314,6 +454,12 @@
       border: 1px solid var(--border);
       padding: 3px 10px;
       border-radius: 100px;
+      transition: all 0.2s;
+    }
+
+    .project-card:hover .tag {
+      border-color: rgba(74,222,128,0.15);
+      color: #aaa;
     }
 
     /* CONTACT */
@@ -332,12 +478,28 @@
       border: 1px solid var(--border);
       border-radius: 10px;
       text-decoration: none;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
     }
+
+    .contact-link::before {
+      content: '';
+      position: absolute;
+      left: -100%;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(74,222,128,0.04), transparent);
+      transition: left 0.5s ease;
+    }
+
+    .contact-link:hover::before { left: 100%; }
 
     .contact-link:hover {
       border-color: rgba(74, 222, 128, 0.3);
       background: #181818;
+      transform: translateX(4px);
     }
 
     .contact-link-left {
@@ -355,7 +517,10 @@
       align-items: center;
       justify-content: center;
       font-size: 1rem;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
+
+    .contact-link:hover .contact-icon { transform: scale(1.15) rotate(-5deg); }
 
     .contact-link-name {
       font-weight: 500;
@@ -371,12 +536,12 @@
     .contact-link-arrow {
       color: var(--muted);
       font-size: 0.9rem;
-      transition: all 0.2s;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
     .contact-link:hover .contact-link-arrow {
       color: var(--accent);
-      transform: translateX(3px);
+      transform: translateX(5px) scale(1.2);
     }
 
     /* FOOTER */
@@ -388,10 +553,7 @@
       align-items: center;
     }
 
-    footer p {
-      font-size: 0.8rem;
-      color: var(--muted);
-    }
+    footer p { font-size: 0.8rem; color: var(--muted); }
 
     footer a {
       color: var(--muted);
@@ -402,30 +564,19 @@
 
     footer a:hover { color: var(--accent); }
 
-    /* ANIMATIONS */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      animation: fadeIn 0.6s forwards;
-    }
-
-    .fade-in:nth-child(1) { animation-delay: 0.1s; }
-    .fade-in:nth-child(2) { animation-delay: 0.2s; }
-    .fade-in:nth-child(3) { animation-delay: 0.3s; }
-    .fade-in:nth-child(4) { animation-delay: 0.4s; }
-
-    @keyframes fadeIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
     @media (max-width: 600px) {
       .about-grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 2.2rem; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
+      .cursor, .cursor-ring { display: none; }
     }
   </style>
 </head>
 <body>
+
+
+
+
 
 <div class="container">
   <nav>
@@ -437,42 +588,38 @@
     </ul>
   </nav>
 
-  <section class="hero" style="border: none; padding-top: 100px;">
-    <div class="fade-in">
-      <div class="hero-tag">Available on Gatecraft</div>
-    </div>
-    <div class="fade-in">
-      <h1>Minecraft player<br>& <em>developer.</em></h1>
-    </div>
-    <div class="fade-in">
-      <p>Czech gamer and plugin developer. I build tools and resources for the Minecraft community — from server plugins to community wikis.</p>
-    </div>
-    <div class="fade-in hero-actions">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">Available on Gatecraft</div>
+    <h1>Minecraft player<br>& <em>developer</em></h1>
+    <p>Czech gamer and plugin developer. I build tools and resources for the Minecraft community — from server plugins to community wikis.</p>
+    <div class="hero-actions">
       <a href="#projects" class="btn btn-primary">View Projects →</a>
       <a href="https://github.com/Vlkodlak148" target="_blank" class="btn btn-secondary">GitHub ↗</a>
     </div>
   </section>
 
+  <!-- ABOUT -->
   <section id="about">
-    <div class="section-label">About</div>
-    <div class="section-title">Who I am</div>
+    <div class="section-label reveal">About</div>
+    <div class="section-title reveal reveal-delay-1">Who I am</div>
     <div class="about-grid">
-      <div class="about-card">
+      <div class="about-card reveal reveal-delay-1">
         <div class="about-card-icon">⛏️</div>
         <h3>Minecraft Player</h3>
         <p>Active player on Gatecraft — exploring dungeons, mapping coordinates and helping the community.</p>
       </div>
-      <div class="about-card">
+      <div class="about-card reveal reveal-delay-2">
         <div class="about-card-icon">🔌</div>
         <h3>Plugin Developer</h3>
         <p>Building CraftBukkit plugins in Java. Focused on practical tools that improve gameplay.</p>
       </div>
-      <div class="about-card">
+      <div class="about-card reveal reveal-delay-3">
         <div class="about-card-icon">🗺️</div>
         <h3>Community Wiki</h3>
         <p>Documenting dungeon locations, towns and secrets on the Gatecraft server for other players.</p>
       </div>
-      <div class="about-card">
+      <div class="about-card reveal reveal-delay-4">
         <div class="about-card-icon">🇨🇿</div>
         <h3>Czech</h3>
         <p>Based in the Czech Republic. Playing and developing in my spare time.</p>
@@ -480,11 +627,12 @@
     </div>
   </section>
 
+  <!-- PROJECTS -->
   <section id="projects">
-    <div class="section-label">Projects</div>
-    <div class="section-title">What I've built</div>
+    <div class="section-label reveal">Projects</div>
+    <div class="section-title reveal reveal-delay-1">What I've built</div>
 
-    <a href="https://Vlkodlak148.github.io/Gatecraft-Coords" target="_blank" class="project-card">
+    <a href="https://github.com/Vlkodlak148/Gatecraft-Coords" target="_blank" class="project-card reveal reveal-delay-2">
       <div class="project-header">
         <div class="project-name">🗺️ Gatecraft-Coords</div>
         <div class="project-arrow">↗</div>
@@ -498,7 +646,7 @@
       </div>
     </a>
 
-    <a href="https://github.com/Vlkodlak148/GoldenTouch" target="_blank" class="project-card">
+    <a href="https://github.com/Vlkodlak148/GoldenTouch" target="_blank" class="project-card reveal reveal-delay-3">
       <div class="project-header">
         <div class="project-name">🪙 GoldenTouch</div>
         <div class="project-arrow">↗</div>
@@ -513,11 +661,12 @@
     </a>
   </section>
 
+  <!-- CONTACT -->
   <section id="contact">
-    <div class="section-label">Contact</div>
-    <div class="section-title">Get in touch</div>
+    <div class="section-label reveal">Contact</div>
+    <div class="section-title reveal reveal-delay-1">Get in touch</div>
     <div class="contact-links">
-      <a href="https://github.com/Vlkodlak148" target="_blank" class="contact-link">
+      <a href="https://github.com/Vlkodlak148" target="_blank" class="contact-link reveal reveal-delay-1">
         <div class="contact-link-left">
           <div class="contact-icon">🐙</div>
           <div>
@@ -527,7 +676,7 @@
         </div>
         <div class="contact-link-arrow">→</div>
       </a>
-      <a href="mailto:Vlkodlak148@proton.me" class="contact-link">
+      <a href="mailto:Vlkodlak148@proton.me" class="contact-link reveal reveal-delay-2">
         <div class="contact-link-left">
           <div class="contact-icon">✉️</div>
           <div>
@@ -537,7 +686,7 @@
         </div>
         <div class="contact-link-arrow">→</div>
       </a>
-      <div class="contact-link" style="cursor: default;">
+      <div class="contact-link reveal reveal-delay-3" style="cursor: default;">
         <div class="contact-link-left">
           <div class="contact-icon">💬</div>
           <div>
@@ -554,6 +703,23 @@
     <a href="https://github.com/Vlkodlak148" target="_blank">GitHub ↗</a>
   </footer>
 </div>
+
+<script>
+  
+
+  
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
