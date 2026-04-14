@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vlkodlak148</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@15.1.0/dist/twemoji.min.js" crossorigin="anonymous"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -28,6 +29,22 @@
       line-height: 1.6;
       min-height: 100vh;
       overflow-x: hidden;
+    }
+
+    /* Twemoji sizing — applies to all emoji images inserted by Twemoji */
+    img.emoji {
+      height: 1em;
+      width: 1em;
+      vertical-align: -0.1em;
+      display: inline-block;
+    }
+
+    /* Larger emoji used as card/section icons */
+    .about-card-icon img.emoji,
+    .contact-icon img.emoji {
+      height: 1.4em;
+      width: 1.4em;
+      vertical-align: middle;
     }
 
     /* Animated grid background */
@@ -188,7 +205,6 @@
       position: relative;
     }
 
-    /* Typewriter cursor on the accent word */
     .hero h1 em::after {
       content: '|';
       color: var(--accent);
@@ -385,7 +401,6 @@
 
     .project-card:hover::before { opacity: 1; }
 
-    /* Animated left border accent */
     .project-card::after {
       content: '';
       position: absolute;
@@ -420,6 +435,9 @@
       font-weight: 700;
       color: var(--text);
       letter-spacing: -0.01em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .project-arrow {
@@ -568,15 +586,10 @@
       .about-grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 2.2rem; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
-      .cursor, .cursor-ring { display: none; }
     }
   </style>
 </head>
 <body>
-
-
-
-
 
 <div class="container">
   <nav>
@@ -634,7 +647,7 @@
 
     <a href="https://vlkodlak148.github.io/Gatecraft-Coords" target="_blank" class="project-card reveal reveal-delay-2">
       <div class="project-header">
-        <div class="project-name">🗺️ Gatecraft-Coords</div>
+        <div class="project-name"><span>🗺️</span> Gatecraft-Coords</div>
         <div class="project-arrow">↗</div>
       </div>
       <div class="project-desc">A fan-made coordinate database for the Gatecraft Minecraft server. Documents dungeon locations, towns, loot spots and points of interest across multiple worlds including Chaosphere and Mining Colony.</div>
@@ -648,7 +661,7 @@
 
     <a href="https://github.com/Vlkodlak148/GoldenTouch" target="_blank" class="project-card reveal reveal-delay-3">
       <div class="project-header">
-        <div class="project-name">🪙 GoldenTouch</div>
+        <div class="project-name"><span>🪙</span> GoldenTouch</div>
         <div class="project-arrow">↗</div>
       </div>
       <div class="project-desc">A lightweight CraftBukkit 1.4.6 plugin that gives gold tools automatic Silk Touch behavior — no enchantment required. Supports all gold tools and correctly handles dozens of block types.</div>
@@ -705,20 +718,22 @@
 </div>
 
 <script>
-  
-
-  
-
   // Scroll reveal
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('visible');
     });
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Parse all emojis on the page with Twemoji
+  // ext: 'svg' for vector quality, folder points to the CDN
+  twemoji.parse(document.body, {
+    folder: 'svg',
+    ext: '.svg',
+    base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/'
+  });
 </script>
 
 </body>
