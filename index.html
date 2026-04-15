@@ -153,6 +153,81 @@
     .hero {
       padding: 100px 0 80px;
       border: none !important;
+      display: flex;
+      align-items: center;
+      gap: 48px;
+    }
+
+    .hero-content {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-skin {
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.8s forwards;
+    }
+
+    .hero-skin-frame {
+      position: relative;
+      width: 140px;
+      height: 220px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Soft green glow behind the skin */
+    .hero-skin-frame::before {
+      content: '';
+      position: absolute;
+      inset: -20px;
+      background: radial-gradient(circle, rgba(74,222,128,0.12) 0%, transparent 70%);
+      border-radius: 50%;
+      animation: skinGlow 3s ease-in-out infinite;
+    }
+
+    @keyframes skinGlow {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.08); }
+    }
+
+    /* Subtle floating animation on the skin image */
+    .hero-skin img {
+      width: 140px;
+      height: auto;
+      image-rendering: pixelated;
+      filter: drop-shadow(0 16px 32px rgba(0,0,0,0.6));
+      animation: skinFloat 4s ease-in-out infinite;
+      position: relative;
+      z-index: 1;
+    }
+
+    @keyframes skinFloat {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    .hero-skin-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    @media (max-width: 700px) {
+      .hero {
+        flex-direction: column-reverse;
+        gap: 32px;
+        padding: 60px 0 60px;
+      }
+      .hero-skin img { width: 100px; }
+      .hero-skin-frame { width: 100px; height: 160px; }
     }
 
     .hero-tag {
@@ -586,6 +661,7 @@
       .about-grid { grid-template-columns: 1fr; }
       .hero h1 { font-size: 2.2rem; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
+      .hero { padding: 48px 0 48px; }
     }
   </style>
 </head>
@@ -603,12 +679,24 @@
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-tag">Available on Gatecraft</div>
-    <h1>Minecraft player<br>& <em>developer</em></h1>
-    <p>Czech gamer and plugin developer. I build tools and resources for the Minecraft community — from server plugins to community wikis.</p>
-    <div class="hero-actions">
-      <a href="#projects" class="btn btn-primary">View Projects →</a>
-      <a href="https://github.com/Vlkodlak148" target="_blank" class="btn btn-secondary">GitHub ↗</a>
+    <div class="hero-content">
+      <div class="hero-tag">Available on Gatecraft</div>
+      <h1>Minecraft player<br>& <em>developer</em></h1>
+      <p>Czech gamer and plugin developer. I build tools and resources for the Minecraft community — from server plugins to community wikis.</p>
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View Projects →</a>
+        <a href="https://github.com/Vlkodlak148" target="_blank" class="btn btn-secondary">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="hero-skin">
+      <div class="hero-skin-frame">
+        <img
+          src="https://visage.surgeplay.com/full/256/168fa95c6bac43e4b4c1dee7fcadc2bc"
+          alt="Vlkodlak148 Minecraft skin"
+          title="Vlkodlak148"
+        >
+      </div>
+      <div class="hero-skin-label">Vlkodlak148</div>
     </div>
   </section>
 
