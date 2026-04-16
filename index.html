@@ -31,20 +31,28 @@
       overflow-x: hidden;
     }
 
-    /* Twemoji sizing — applies to all emoji images inserted by Twemoji */
+    /* Twemoji CSS - Required to make the images behave like text emojis */
     img.emoji {
       height: 1em;
       width: 1em;
+      margin: 0 .05em 0 .1em;
       vertical-align: -0.1em;
       display: inline-block;
     }
 
-    /* Larger emoji used as card/section icons */
+    /* Specific sizing for your UI icons */
     .about-card-icon img.emoji,
     .contact-icon img.emoji {
       height: 1.4em;
       width: 1.4em;
       vertical-align: middle;
+    }
+
+    .project-name img.emoji {
+      height: 1.1em;
+      width: 1.1em;
+      vertical-align: middle;
+      margin-right: 8px;
     }
 
     /* Animated grid background */
@@ -182,7 +190,6 @@
       justify-content: center;
     }
 
-    /* Soft green glow behind the skin */
     .hero-skin-frame::before {
       content: '';
       position: absolute;
@@ -197,7 +204,6 @@
       50% { opacity: 1; transform: scale(1.08); }
     }
 
-    /* Subtle floating animation on the skin image */
     .hero-skin img {
       width: 140px;
       height: auto;
@@ -512,7 +518,7 @@
       letter-spacing: -0.01em;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0px; /* Managed by emoji margin */
     }
 
     .project-arrow {
@@ -678,7 +684,6 @@
     </ul>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-content">
       <div class="hero-tag">Available on Gatecraft</div>
@@ -701,7 +706,6 @@
     </div>
   </section>
 
-  <!-- ABOUT -->
   <section id="about">
     <div class="section-label reveal">About</div>
     <div class="section-title reveal reveal-delay-1">Who I am</div>
@@ -739,7 +743,6 @@
     </div>
   </section>
 
-  <!-- PROJECTS -->
   <section id="projects">
     <div class="section-label reveal">Projects</div>
     <div class="section-title reveal reveal-delay-1">What I've built</div>
@@ -800,7 +803,6 @@
     </a>
   </section>
 
-  <!-- SETUP -->
   <section id="setup">
     <div class="section-label reveal">Setup</div>
     <div class="section-title reveal reveal-delay-1">My station</div>
@@ -818,7 +820,6 @@
     </div>
   </section>
 
-  <!-- QUOTE -->
   <section style="padding: 48px 0; border-top: 1px solid var(--border);">
     <blockquote class="reveal" style="
       border-left: 3px solid var(--accent);
@@ -886,7 +887,15 @@
 </div>
 
 <script>
-  // Scroll reveal
+  // Initializing Twemoji (Firefox style)
+  // This replaces all native emojis with the Twemoji SVG set
+  twemoji.parse(document.body, {
+    folder: 'svg',
+    ext: '.svg',
+    base: 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/'
+  });
+
+  // Scroll reveal observer
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (entry.isIntersecting) entry.target.classList.add('visible');
@@ -894,14 +903,6 @@
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // Parse all emojis on the page with Twemoji
-  // ext: 'svg' for vector quality, folder points to the CDN
-  twemoji.parse(document.body, {
-    folder: 'svg',
-    ext: '.svg',
-    base: 'https://cdn.jsdelivr.net/gh/twitter/twemoji@14.0.2/assets/'
-  });
 </script>
 
 </body>
