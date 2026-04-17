@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vlkodlak148</title>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
-  <script src="https://cdn.jsdelivr.net/npm/@twemoji/api@15.1.0/dist/twemoji.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/twemoji@14.0.2/dist/twemoji.min.js" crossorigin="anonymous"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -887,12 +887,11 @@
 </div>
 
 <script>
-  // Initializing Twemoji (Firefox style)
-  // This replaces all native emojis with the Twemoji SVG set
+  // Twemoji — uses the stable v14 CDN with correct asset base
   twemoji.parse(document.body, {
     folder: 'svg',
     ext: '.svg',
-    base: 'https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/'
+    base: 'https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/'
   });
 
   // Scroll reveal observer
