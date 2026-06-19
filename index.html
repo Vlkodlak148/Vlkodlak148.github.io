@@ -1,85 +1,87 @@
-<style>
-  :root {
-    --s-bg: #1b2838;
-    --s-panel: #16202d;
-    --s-blue: #66c0f4;
-    --s-blue2: #4a90b8;
-    --s-text: #c6d4df;
-    --s-muted: #8f98a0;
-    --s-border: #2a3f5a;
-    --s-green: #a4d007;
-    --s-online: #57cbde;
-    --s-card: #1e2d3d;
-  }
-  .sp-root { background: var(--s-bg); color: var(--s-text); font-family: Arial, sans-serif; font-size: 13px; line-height: 1.5; }
-  .sp-header { background: #2a475e; border-bottom: 1px solid var(--s-border); padding: 0; }
-  .sp-header-inner { padding: 20px 20px 0; display: flex; align-items: flex-end; gap: 16px; }
-  .sp-avatar { width: 88px; height: 88px; border: 3px solid var(--s-online); flex-shrink: 0; overflow: hidden; }
-  .sp-avatar img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; display: block; }
-  .sp-hinfo { flex: 1; padding-bottom: 14px; }
-  .sp-name { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
-  .sp-sub { font-size: 11px; color: var(--s-muted); margin-top: 2px; }
-  .sp-status { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px; color: var(--s-online); }
-  .sp-dot { width: 7px; height: 7px; background: var(--s-online); border-radius: 50%; }
-  .sp-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
-  .sp-badge { background: rgba(102,192,244,0.1); border: 1px solid rgba(102,192,244,0.25); color: var(--s-blue); font-size: 10px; padding: 2px 8px; letter-spacing: 0.4px; text-transform: uppercase; }
-  .sp-actions { padding: 10px 20px; background: rgba(0,0,0,0.25); border-bottom: 1px solid var(--s-border); display: flex; gap: 8px; flex-wrap: wrap; }
-  .sp-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 14px; font-size: 11px; font-family: inherit; cursor: pointer; text-decoration: none; border: none; letter-spacing: 0.3px; }
-  .sp-btn-green { background: linear-gradient(to bottom, #a4d007, #4c6c22); color: #d2e885; text-shadow: 1px 1px 0 rgba(0,0,0,0.5); }
-  .sp-btn-green:hover { background: linear-gradient(to bottom, #b8e108, #5a7d28); }
-  .sp-btn-gray { background: linear-gradient(to bottom, #4c535c, #23282e); color: #c6d4df; border: 1px solid #111; }
-  .sp-btn-gray:hover { background: linear-gradient(to bottom, #5d6874, #2d343b); }
-  .sp-body { display: flex; }
-  .sp-sidebar { width: 200px; flex-shrink: 0; border-right: 1px solid var(--s-border); }
-  .sp-sb-block { border-bottom: 1px solid var(--s-border); padding: 12px 14px; }
-  .sp-sb-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--s-muted); margin-bottom: 8px; border-bottom: 1px solid var(--s-border); padding-bottom: 5px; }
-  .sp-stat { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; }
-  .sp-stat-l { color: var(--s-muted); }
-  .sp-stat-v { color: var(--s-blue); font-weight: 700; }
-  .sp-bar-wrap { margin-bottom: 7px; }
-  .sp-bar-label { display: flex; justify-content: space-between; font-size: 11px; color: var(--s-muted); margin-bottom: 2px; }
-  .sp-bar-track { height: 4px; background: rgba(255,255,255,0.07); }
-  .sp-bar-fill { height: 100%; background: linear-gradient(to right, var(--s-blue2), var(--s-blue)); }
-  .sp-link { display: flex; align-items: center; gap: 8px; padding: 5px 0; color: var(--s-muted); font-size: 12px; text-decoration: none; }
-  .sp-link:hover { color: var(--s-blue); }
-  .sp-link i { font-size: 14px; color: var(--s-blue); flex-shrink: 0; }
-  .sp-main { flex: 1; min-width: 0; }
-  .sp-sec-hdr { background: #1e2d3d; border-bottom: 1px solid var(--s-border); padding: 7px 14px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--s-blue); display: flex; align-items: center; gap: 6px; }
-  .sp-sec-hdr i { font-size: 13px; }
-  .sp-sec-body { padding: 12px 14px; border-bottom: 1px solid var(--s-border); }
-  .sp-about { font-size: 12px; color: var(--s-muted); line-height: 1.7; }
-  .sp-about span { color: var(--s-blue); }
-  .sp-proj { display: flex; gap: 10px; padding: 9px; margin-bottom: 5px; background: rgba(0,0,0,0.15); border: 1px solid transparent; text-decoration: none; }
-  .sp-proj:last-child { margin-bottom: 0; }
-  .sp-proj:hover { border-color: rgba(102,192,244,0.25); background: rgba(102,192,244,0.04); }
-  .sp-proj-icon { width: 44px; height: 44px; background: #2a475e; border: 1px solid var(--s-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--s-blue); font-size: 20px; }
-  .sp-proj-info { flex: 1; min-width: 0; }
-  .sp-proj-title { color: var(--s-blue); font-size: 13px; font-weight: 700; margin-bottom: 2px; }
-  .sp-proj:hover .sp-proj-title { text-decoration: underline; }
-  .sp-proj-desc { color: var(--s-muted); font-size: 11px; line-height: 1.5; margin-bottom: 4px; }
-  .sp-proj-tags { display: flex; gap: 4px; flex-wrap: wrap; }
-  .sp-tag { font-size: 10px; color: var(--s-muted); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); padding: 1px 6px; }
-  .sp-proj-type { font-size: 10px; color: var(--s-muted); white-space: nowrap; align-self: flex-start; padding-top: 2px; }
-  .sp-setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .sp-setup-card { background: rgba(0,0,0,0.18); border: 1px solid var(--s-border); padding: 11px; display: flex; gap: 10px; align-items: flex-start; }
-  .sp-setup-card i { font-size: 18px; color: var(--s-blue); margin-top: 1px; flex-shrink: 0; }
-  .sp-setup-title { color: var(--s-text); font-size: 12px; font-weight: 700; }
-  .sp-setup-desc { color: var(--s-muted); font-size: 11px; margin-top: 2px; line-height: 1.4; }
-  .sp-act-item { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: flex-start; }
-  .sp-act-item:last-child { border-bottom: none; }
-  .sp-act-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
-  .sp-act-text { font-size: 11px; color: var(--s-muted); line-height: 1.5; }
-  .sp-act-text a { color: var(--s-blue); text-decoration: none; }
-  .sp-act-text a:hover { text-decoration: underline; }
-  .sp-act-time { font-size: 10px; color: rgba(143,152,160,0.55); }
-  .sp-quote { background: rgba(0,0,0,0.18); border-left: 2px solid var(--s-blue2); padding: 10px 14px; font-size: 12px; color: var(--s-muted); font-style: italic; }
-  .sp-footer { background: #171a21; border-top: 1px solid var(--s-border); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
-  .sp-footer p { font-size: 11px; color: rgba(143,152,160,0.45); }
-  .sp-footer a { font-size: 11px; color: var(--s-muted); text-decoration: none; }
-  .sp-footer a:hover { color: var(--s-blue); }
-</style>
-
-<div class="sp-root">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vlkodlak148</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --s-bg: #1b2838;
+      --s-blue: #66c0f4;
+      --s-blue2: #4a90b8;
+      --s-text: #c6d4df;
+      --s-muted: #8f98a0;
+      --s-border: #2a3f5a;
+      --s-green: #a4d007;
+      --s-online: #57cbde;
+    }
+    body { background: var(--s-bg); color: var(--s-text); font-family: Arial, sans-serif; font-size: 13px; line-height: 1.5; margin: 0; }
+    .sp-header { background: #2a475e; border-bottom: 1px solid var(--s-border); }
+    .sp-header-inner { padding: 20px 20px 0; display: flex; align-items: flex-end; gap: 16px; }
+    .sp-avatar { width: 64px; height: 64px; border: 3px solid var(--s-online); flex-shrink: 0; overflow: hidden; }
+    .sp-avatar img { width: 100%; height: 100%; object-fit: cover; image-rendering: pixelated; display: block; }
+    .sp-hinfo { flex: 1; padding-bottom: 14px; }
+    .sp-name { font-size: 20px; font-weight: 700; color: #fff; letter-spacing: 0.3px; }
+    .sp-sub { font-size: 11px; color: var(--s-muted); margin-top: 2px; }
+    .sp-status { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px; color: var(--s-online); }
+    .sp-dot { width: 7px; height: 7px; background: var(--s-online); border-radius: 50%; }
+    .sp-badges { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+    .sp-badge { background: rgba(102,192,244,0.1); border: 1px solid rgba(102,192,244,0.25); color: var(--s-blue); font-size: 10px; padding: 2px 8px; letter-spacing: 0.4px; text-transform: uppercase; }
+    .sp-actions { padding: 10px 20px; background: rgba(0,0,0,0.25); border-bottom: 1px solid var(--s-border); display: flex; gap: 8px; flex-wrap: wrap; }
+    .sp-btn { display: inline-flex; align-items: center; gap: 5px; padding: 6px 14px; font-size: 11px; font-family: inherit; cursor: pointer; text-decoration: none; border: none; letter-spacing: 0.3px; }
+    .sp-btn-green { background: linear-gradient(to bottom, #a4d007, #4c6c22); color: #d2e885; text-shadow: 1px 1px 0 rgba(0,0,0,0.5); }
+    .sp-btn-green:hover { background: linear-gradient(to bottom, #b8e108, #5a7d28); }
+    .sp-btn-gray { background: linear-gradient(to bottom, #4c535c, #23282e); color: #c6d4df; border: 1px solid #111; }
+    .sp-btn-gray:hover { background: linear-gradient(to bottom, #5d6874, #2d343b); }
+    .sp-body { display: flex; }
+    .sp-sidebar { width: 200px; flex-shrink: 0; border-right: 1px solid var(--s-border); }
+    .sp-sb-block { border-bottom: 1px solid var(--s-border); padding: 12px 14px; }
+    .sp-sb-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--s-muted); margin-bottom: 8px; border-bottom: 1px solid var(--s-border); padding-bottom: 5px; }
+    .sp-stat { display: flex; justify-content: space-between; font-size: 12px; padding: 3px 0; }
+    .sp-stat-l { color: var(--s-muted); }
+    .sp-stat-v { color: var(--s-blue); font-weight: 700; }
+    .sp-link { display: flex; align-items: center; gap: 8px; padding: 5px 0; color: var(--s-muted); font-size: 12px; text-decoration: none; }
+    .sp-link:hover { color: var(--s-blue); }
+    .sp-link i { font-size: 14px; color: var(--s-blue); flex-shrink: 0; }
+    .sp-main { flex: 1; min-width: 0; }
+    .sp-sec-hdr { background: #1e2d3d; border-bottom: 1px solid var(--s-border); padding: 7px 14px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--s-blue); display: flex; align-items: center; gap: 6px; }
+    .sp-sec-hdr i { font-size: 13px; }
+    .sp-sec-body { padding: 12px 14px; border-bottom: 1px solid var(--s-border); }
+    .sp-about { font-size: 12px; color: var(--s-muted); line-height: 1.7; }
+    .sp-about span { color: var(--s-blue); }
+    .sp-proj { display: flex; gap: 10px; padding: 9px; margin-bottom: 5px; background: rgba(0,0,0,0.15); border: 1px solid transparent; text-decoration: none; }
+    .sp-proj:last-child { margin-bottom: 0; }
+    .sp-proj:hover { border-color: rgba(102,192,244,0.25); background: rgba(102,192,244,0.04); }
+    .sp-proj-icon { width: 44px; height: 44px; background: #2a475e; border: 1px solid var(--s-border); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: var(--s-blue); font-size: 20px; }
+    .sp-proj-info { flex: 1; min-width: 0; }
+    .sp-proj-title { color: var(--s-blue); font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+    .sp-proj:hover .sp-proj-title { text-decoration: underline; }
+    .sp-proj-desc { color: var(--s-muted); font-size: 11px; line-height: 1.5; margin-bottom: 4px; }
+    .sp-proj-tags { display: flex; gap: 4px; flex-wrap: wrap; }
+    .sp-tag { font-size: 10px; color: var(--s-muted); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.07); padding: 1px 6px; }
+    .sp-proj-type { font-size: 10px; color: var(--s-muted); white-space: nowrap; align-self: flex-start; padding-top: 2px; }
+    .sp-setup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .sp-setup-card { background: rgba(0,0,0,0.18); border: 1px solid var(--s-border); padding: 11px; display: flex; gap: 10px; align-items: flex-start; }
+    .sp-setup-card i { font-size: 18px; color: var(--s-blue); margin-top: 1px; flex-shrink: 0; }
+    .sp-setup-title { color: var(--s-text); font-size: 12px; font-weight: 700; }
+    .sp-setup-desc { color: var(--s-muted); font-size: 11px; margin-top: 2px; line-height: 1.4; }
+    .sp-act-item { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid rgba(255,255,255,0.04); align-items: flex-start; }
+    .sp-act-item:last-child { border-bottom: none; }
+    .sp-act-dot { width: 7px; height: 7px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+    .sp-act-text { font-size: 11px; color: var(--s-muted); line-height: 1.5; }
+    .sp-act-text a { color: var(--s-blue); text-decoration: none; }
+    .sp-act-text a:hover { text-decoration: underline; }
+    .sp-act-time { font-size: 10px; color: rgba(143,152,160,0.55); }
+    .sp-quote { background: rgba(0,0,0,0.18); border-left: 2px solid var(--s-blue2); padding: 10px 14px; font-size: 12px; color: var(--s-muted); font-style: italic; }
+    .sp-footer { background: #171a21; border-top: 1px solid var(--s-border); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .sp-footer p { font-size: 11px; color: rgba(143,152,160,0.45); }
+    .sp-footer a { font-size: 11px; color: var(--s-muted); text-decoration: none; }
+    .sp-footer a:hover { color: var(--s-blue); }
+  </style>
+</head>
+<body>
 
   <div class="sp-header">
     <div class="sp-header-inner">
@@ -120,30 +122,6 @@
         <div class="sp-stat"><span class="sp-stat-l">OS</span><span class="sp-stat-v">Linux Mint</span></div>
         <div class="sp-stat"><span class="sp-stat-l">Server</span><span class="sp-stat-v">Gatecraft</span></div>
         <div class="sp-stat"><span class="sp-stat-l">Status</span><span class="sp-stat-v" style="color:var(--s-online)">Online</span></div>
-      </div>
-
-      <div class="sp-sb-block">
-        <div class="sp-sb-title">Skills</div>
-        <div class="sp-bar-wrap">
-          <div class="sp-bar-label"><span>Java</span><span>90%</span></div>
-          <div class="sp-bar-track"><div class="sp-bar-fill" style="width:90%"></div></div>
-        </div>
-        <div class="sp-bar-wrap">
-          <div class="sp-bar-label"><span>CraftBukkit</span><span>85%</span></div>
-          <div class="sp-bar-track"><div class="sp-bar-fill" style="width:85%"></div></div>
-        </div>
-        <div class="sp-bar-wrap">
-          <div class="sp-bar-label"><span>Fabric Mods</span><span>75%</span></div>
-          <div class="sp-bar-track"><div class="sp-bar-fill" style="width:75%"></div></div>
-        </div>
-        <div class="sp-bar-wrap">
-          <div class="sp-bar-label"><span>Linux</span><span>80%</span></div>
-          <div class="sp-bar-track"><div class="sp-bar-fill" style="width:80%"></div></div>
-        </div>
-        <div class="sp-bar-wrap">
-          <div class="sp-bar-label"><span>Python</span><span>70%</span></div>
-          <div class="sp-bar-track"><div class="sp-bar-fill" style="width:70%"></div></div>
-        </div>
       </div>
 
       <div class="sp-sb-block">
@@ -270,4 +248,19 @@
     <a href="https://github.com/Vlkodlak148" target="_blank">GitHub ↗</a>
   </div>
 
-</div>
+  <div id="sp-modal-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:1000;">
+    <div style="background:#1e2d3d;border:1px solid #2a3f5a;width:340px;max-width:90%;box-shadow:0 8px 32px rgba(0,0,0,0.5);">
+      <div style="background:#2a475e;padding:14px 18px;border-bottom:1px solid #2a3f5a;">
+        <div style="font-size:13px;font-weight:700;color:#fff;">Where would you like to go?</div>
+      </div>
+      <div style="padding:18px;">
+        <div style="font-size:12px;color:#8f98a0;margin-bottom:16px;line-height:1.6;">Choose a destination to continue.</div>
+        <a href="https://vlkodlak148.github.io" style="display:block;text-decoration:none;background:linear-gradient(to bottom, #a4d007, #4c6c22);color:#d2e885;text-shadow:1px 1px 0 rgba(0,0,0,0.5);font-size:12px;font-weight:700;text-align:center;padding:10px;margin-bottom:8px;">Portfolio (vlkodlak148.github.io)</a>
+        <a href="https://vlkodlak148.github.io/Gatecraft-Coords" style="display:block;text-decoration:none;background:linear-gradient(to bottom, #4c535c, #23282e);color:#c6d4df;border:1px solid #111;font-size:12px;font-weight:700;text-align:center;padding:10px;margin-bottom:8px;">Gatecraft-Coords</a>
+        <button onclick="document.getElementById('sp-modal-overlay').remove()" style="width:100%;background:none;border:none;color:#8f98a0;font-size:11px;cursor:pointer;padding:6px;text-decoration:underline;">Stay on this page</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
